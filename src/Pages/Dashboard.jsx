@@ -50,7 +50,7 @@ export const Dashboard = () => {
         showLoading()
         const resp = await createProject(values)
         if(resp){
-            await loadData()
+            await loadData() 
             showSnackbar('success', 'Proyecto creado con éxito')
             setShowUser(false)
         }else{
