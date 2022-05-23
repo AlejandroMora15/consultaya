@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "@firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "@firebase/firestore"
 import { getUserId } from '../Core/apiUser'
 import { db } from "./configDB"
 
@@ -29,6 +29,26 @@ export const getHistorias = async (proyectoId) => {
         }else{
             return []
         }
+    }catch(e){
+        console.log(e)
+        return false
+    }
+}
+
+export const updateHistoria = async (values) => {
+    try{
+        await updateDoc(doc(collection(db, 'historias'), values.id) ,values)
+        return true
+    }catch(e){
+        console.log(e)
+        return false
+    }
+}
+
+export const deleteHistoria = async (id) => {
+    try{
+        await deleteDoc(doc(collection(db, 'historias'), id))
+        return true
     }catch(e){
         console.log(e)
         return false

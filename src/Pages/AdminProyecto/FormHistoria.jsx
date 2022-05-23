@@ -16,11 +16,14 @@ const initialValues = {
     descripcion: '',
 }
 
-export const FormHistoria = ({open, onClose, mode = 'crear', onSubmit}) => {
+export const FormHistoria = ({open, onClose, mode = 'crear', onSubmit, data}) => {
     const [values, setValues] = useState(initialValues)
+    const [key, setKey] = useState(0)
     useEffect(() => {
-
-    }, [])
+        if(mode === 'editar') setValues(data)
+        else setValues(initialValues)
+        setKey(Math.random() + key)
+    }, [open])
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth>
@@ -32,6 +35,7 @@ export const FormHistoria = ({open, onClose, mode = 'crear', onSubmit}) => {
                 }
             </DialogTitle>
             <Formik
+                key={key}
                 onSubmit={onSubmit}
                 validationSchema={historiaValidationSchema}
                 initialValues={values}
