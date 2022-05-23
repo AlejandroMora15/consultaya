@@ -43,7 +43,7 @@ export const Dashboard = () => {
             setProyectosFilter([])
             showSnackbar('error', 'Error al cargar los proyectos')
         }
-        hideLoading()
+        hideLoading() 
     }
 
     const handleCreateProyect = async (values) => {
