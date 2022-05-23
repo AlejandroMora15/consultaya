@@ -16,7 +16,7 @@ export const LoginForm = ({onSubmit}) => {
             onSubmit={onSubmit}
             validationSchema={loginValidationSchema}
         >
-            { ({errors}) => {
+            { () => {
                 return (
                     <Form>
                         <Grid container spacing={2} mb={1}>
@@ -45,7 +45,6 @@ export const LoginForm = ({onSubmit}) => {
                                 </Button>
                             </Grid>
                         </Grid>
-                        
                     </Form>
                 )
             }}

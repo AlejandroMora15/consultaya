@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, addDoc } from "firebase/firestore"
 import { db } from "./configDB"
 
 export const signIn = async (email, password) => {
@@ -19,4 +19,14 @@ export const signIn = async (email, password) => {
 export const getUserId = () => {
     const localUser = localStorage.getItem('user')
     return JSON.parse(localUser).id
+}
+
+export const createUser= async (values) => {
+    try{
+        await addDoc(collection(db, 'usuarios'), values)
+        return true
+    }catch(e){
+        console.log(e)
+        return false
+    }
 }

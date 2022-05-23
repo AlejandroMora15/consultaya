@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { SnackbarContext } from '../../Context/SnackbarContext'
 import { getHistorias, createHistoria, deleteHistoria, updateHistoria } from '../../Core/apiHistoria'
+import { FilterBar } from '../SearchBar'
 import { FormHistoria } from './FormHistoria'
 import { FormValidarProyecto } from './FormValidarProyecto'
 import { TableAdminProyecto } from './TableAdminProyecto'
@@ -10,6 +11,7 @@ import { TableAdminProyecto } from './TableAdminProyecto'
 export const DashboardProyecto = () => {
     const [showCreateHistoria, setCreateHistoria] = useState(false)
     const [historias, setHistorias] = useState([])
+    const [historiasFilter, setHistoriasFilter] = useState([])
     const [mode, setMode] = useState('crear')
     const [dataToEdit, setDataToEdit] = useState(false)
     const [openValidar, setOpenValidar] = useState(false)
@@ -31,12 +33,13 @@ export const DashboardProyecto = () => {
 
     const loadData = async () => {
         showLoading()
-        console.log(state.id)
         const resp = await getHistorias(state.id)
         if(resp){
             setHistorias(resp)
+            setHistoriasFilter(resp)
         }else{
             setHistorias([])
+            setHistoriasFilter([])
             showSnackbar('error', 'Error al cargar los proyectos')
         }
         hideLoading()
@@ -121,9 +124,9 @@ export const DashboardProyecto = () => {
                     <Typography>{state.name}</Typography>
                 </Grid>
                 <Grid item sm={8}>
-                    <Input 
-                        placeholder='Buscar'
-                        fullWidth
+                    <FilterBar
+                        data={historias}
+                        setDataFilter={setHistoriasFilter}
                     />
                 </Grid>
                 <Grid item sm={4}>
@@ -140,7 +143,7 @@ export const DashboardProyecto = () => {
                         handleValidar={handleValidar}
                         handleEdit={handleEdit}
                         handleDelete={handleDelete}
-                        data={historias}
+                        data={historiasFilter}
                     />
                 </Grid>
             </Grid>
