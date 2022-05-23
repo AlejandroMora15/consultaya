@@ -6,9 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export const TableProyect = ({refreshTable, proyectos = []}) => {
     const [rows, setRows] = useState([])
+    let navigate = useNavigate()
+    
     useEffect(() => {
         setRows(
             Array.from(proyectos, ((p, index) => {
@@ -16,6 +20,10 @@ export const TableProyect = ({refreshTable, proyectos = []}) => {
             }))
         )
     }, [proyectos])
+
+    const administrarProyecto = (row) => {
+        navigate('/DashboardProyecto', {state: row})
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -44,7 +52,14 @@ export const TableProyect = ({refreshTable, proyectos = []}) => {
                                 <TableCell>
                                     {row.description}
                                 </TableCell>
-                                <TableCell >{row.id}</TableCell>
+                                <TableCell >
+                                    <Button
+                                        onClick={() => administrarProyecto(row)}
+                                        fullWidth
+                                        variant='outlined'
+                                    >Administrar proyecto</Button>
+                                </TableCell>
+                                    
                             </TableRow>
                     ))}
                 </TableBody>

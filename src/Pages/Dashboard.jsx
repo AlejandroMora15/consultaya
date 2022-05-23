@@ -5,6 +5,7 @@ import { FormProyect } from './Proyecto/FormProyect'
 import { TableProyect } from './Proyecto/TableProyect'
 import { createProject, getProject } from '../Core/apiProject'
 import { SnackbarContext } from '../Context/SnackbarContext'
+import { useNavigate } from 'react-router-dom'
 
 export const Dashboard = () => {
     const {
@@ -14,6 +15,7 @@ export const Dashboard = () => {
     } = useContext(SnackbarContext)
     const [ createProyect, setCreateProyect] = useState(false)
     const [ proyectos, setProyectos] = useState([])
+    let navigate = useNavigate()
 
     const openCreateProyecto = () => {
         setCreateProyect(true)
@@ -48,6 +50,10 @@ export const Dashboard = () => {
         hideLoading()
     }
     
+    const signOut = () => {
+        navigate('/')
+    }
+
     useEffect(() => {
         async function init(){
             await loadData()
@@ -59,7 +65,7 @@ export const Dashboard = () => {
     return (
         <Paper>
             <Grid container p={2} spacing={2}>
-                <Grid item sm={9}>
+                <Grid item sm={7}>
                     <Input
                         placeholder='Buscar...'
                         fullWidth
@@ -71,6 +77,14 @@ export const Dashboard = () => {
                         onClick={openCreateProyecto}
                         variant='contained'
                     >Crear Proyecto</Button>
+                </Grid>
+                <Grid item sm={2}>
+                    <Button 
+                        fullWidth
+                        color='error'
+                        onClick={signOut}
+                        variant='contained'
+                    >Salir</Button>
                 </Grid>
                 <Grid item sm={12}>
                     <TableProyect
