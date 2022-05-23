@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SnackbarContext } from './Context/SnackbarContext'
+import { Dashboard } from './Pages/Dashboard'
 import { Login } from './Pages/Login'
 
 export const Router = () => {
@@ -12,7 +13,8 @@ export const Router = () => {
       <BrowserRouter>
           <Routes> 
               <Route path="/*" element={<Login />} />
-              {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Dashboard" element={<Dashboard />} /> 
           </Routes>
       </BrowserRouter>   
     </>

@@ -15,3 +15,8 @@ export const signIn = async (email, password) => {
         return false
     }
 }
+
+export const getUserId = () => {
+    const localUser = localStorage.getItem('user')
+    return JSON.parse(localUser).id
+}

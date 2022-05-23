@@ -19,7 +19,7 @@ export const SnackbarProvider = ({children}) => {
     }
 
     const showLoading = () => { 
-        setShowBD(false) 
+        setShowBD(true) 
     }
 
     const hideLoading = () => { 

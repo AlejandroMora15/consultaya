@@ -6,16 +6,15 @@ import { signIn } from '../Core/apiUser'
 import { SnackbarContext } from '../Context/SnackbarContext'
 
 export const Login = () => {
-    let navigate = useNavigate()
     const { setSignIn } = useContext(UserContext)
     const { showSnackbar } = useContext(SnackbarContext)
-
+    let navigate = useNavigate()
+    
     const handleSignIn = async ({email, password}) => {
         const user = await signIn(email, password)
         if(user){
             setSignIn(user)
-            console.log('si puede')
-            //navigate('/Dashboard')
+            navigate('/Dashboard')
         }else{
             showSnackbar('error', 'Usuario o contraseña erróneos')
         }
