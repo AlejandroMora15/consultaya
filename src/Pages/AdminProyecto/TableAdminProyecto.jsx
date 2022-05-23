@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Grid } from '@mui/material';
 
-export const TableAdminProyecto = ({data = [], handleDelete, handleEdit}) => {
+export const TableAdminProyecto = ({data = [], handleDelete, handleEdit, handleValidar}) => {
   const [rows, setRows] = useState([])
   useEffect(() => {
     setRows(Array.from(data, (e, index) => {
@@ -51,12 +51,13 @@ export const TableAdminProyecto = ({data = [], handleDelete, handleEdit}) => {
               <TableCell>{row.deseo}</TableCell>
               <TableCell>{row.proposito}</TableCell>
               <TableCell>{
-                row.validado ? 'Validado' : 'Sin validar'
+                row.isAprobado
               }</TableCell>
               <TableCell>
                 <Grid container spacing={1}>
                   <Grid item>
                     <Button
+                      onClick={() => handleValidar(row)}
                       variant='contained'
                       color='success'
                     >

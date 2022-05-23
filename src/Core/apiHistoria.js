@@ -7,7 +7,22 @@ export const createHistoria = async (values) => {
         await addDoc(collection(db, 'historias'), {
             ...values, 
             userId: getUserId(),
-            validado: false
+            p1: 'No',
+            obs1: '',
+            p2: 'No',
+            obs2: '',
+            p3: 'No',
+            obs3: '',
+            p4: 'No',
+            obs4: '',
+            p5: 'No',
+            obs5: '',
+            p6: 'No',
+            obs6: '',
+            number_vh: '',
+            isAprobado: 'No',
+            elabora: '',
+            revisa: ''
         })
         return true
     }catch(e){

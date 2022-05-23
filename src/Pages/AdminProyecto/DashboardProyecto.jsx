@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { SnackbarContext } from '../../Context/SnackbarContext'
 import { getHistorias, createHistoria, deleteHistoria, updateHistoria } from '../../Core/apiHistoria'
 import { FormHistoria } from './FormHistoria'
+import { FormValidarProyecto } from './FormValidarProyecto'
 import { TableAdminProyecto } from './TableAdminProyecto'
 
 export const DashboardProyecto = () => {
@@ -11,6 +12,7 @@ export const DashboardProyecto = () => {
     const [historias, setHistorias] = useState([])
     const [mode, setMode] = useState('crear')
     const [dataToEdit, setDataToEdit] = useState(false)
+    const [openValidar, setOpenValidar] = useState(false)
     const { state } = useLocation()
     const {
         showLoading, 
@@ -87,6 +89,24 @@ export const DashboardProyecto = () => {
         hideLoading()
     }
 
+    const handleValidar = (values) =>{
+        setDataToEdit(values)
+        setOpenValidar(true)
+    }
+    
+    const handleFormValidar = async (values) => {
+        showLoading()
+        const resp = await updateHistoria(values)
+        if(resp){
+            await loadData()
+            showSnackbar('success', 'V.H.U. editada con éxito')
+            setOpenValidar(false)
+        }else{
+            showSnackbar('error', 'Error al editar la historia')
+        }
+        hideLoading()
+    }
+
     useEffect(() => {
         async function init(){
             await loadData()
@@ -117,6 +137,7 @@ export const DashboardProyecto = () => {
                 </Grid>
                 <Grid item sm={12}>
                     <TableAdminProyecto 
+                        handleValidar={handleValidar}
                         handleEdit={handleEdit}
                         handleDelete={handleDelete}
                         data={historias}
@@ -130,7 +151,12 @@ export const DashboardProyecto = () => {
                 onClose={closeCreateHistoria}
                 onSubmit={handleCreateHistoria}
             />
-            {/* <FormValidarHistoria /> */}
+            <FormValidarProyecto    
+                onClose={() => setOpenValidar(false)}
+                open={openValidar}
+                initialValues={dataToEdit}
+                onValidate={handleFormValidar}
+            />
         </Paper>
     )
 }
